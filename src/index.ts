@@ -1,6 +1,6 @@
 import { readdirSync } from 'fs';
 import { join, parse } from 'path';
-import type { TSESLint } from '@typescript-eslint/utils';
+import type { TSESLint, TSESTree } from '@typescript-eslint/utils';
 import globals from './globals.json';
 import * as snapshotProcessor from './processors/snapshot-processor';
 
@@ -12,6 +12,12 @@ type RuleModule = TSESLint.RuleModule<string, unknown[]> & {
 declare module '@typescript-eslint/utils/dist/ts-eslint/Rule' {
   export interface RuleMetaDataDocs {
     category: 'Best Practices' | 'Possible Errors';
+  }
+}
+
+declare module '@typescript-eslint/utils/dist/ts-eslint/SourceCode' {
+  export interface SourceCode {
+    getScope(node: TSESTree.Node): TSESLint.Scope.Scope;
   }
 }
 
